@@ -2,7 +2,7 @@
 
 A high-performance asynchronous domain availability checker supporting pattern matching and wordlist modes with checkpoint/resume functionality.
 
-**Language:** [中文](README CN.md) | [English](README.md)
+**Language:** [中文](README-CN.md) | [English](README.md)
 
 <!-- PROJECT SHIELDS -->
 
