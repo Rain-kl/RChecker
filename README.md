@@ -1,4 +1,4 @@
-# Domain Checker
+# RChecker
 
 A high-performance asynchronous domain availability checker supporting pattern matching and wordlist modes with checkpoint/resume functionality.
 
@@ -20,7 +20,7 @@ A high-performance asynchronous domain availability checker supporting pattern m
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Domain Checker</h3>
+  <h3 align="center">RChecker</h3>
   <p align="center">
     A fast and efficient domain availability checking tool
     <br />
@@ -38,7 +38,7 @@ A high-performance asynchronous domain availability checker supporting pattern m
 
 ## Project Overview
 
-Domain Checker is a professional domain availability checking tool that uses asynchronous HTTP requests and the RDAP protocol to efficiently check the registration status of large numbers of domains. The tool supports multiple operation modes, including pattern matching generation, wordlist import, and checkpoint/resume functionality.
+RChecker is a professional domain availability checking tool that uses asynchronous HTTP requests and the RDAP protocol to efficiently check the registration status of large numbers of domains. The tool supports multiple operation modes, including pattern matching generation, wordlist import, and checkpoint/resume functionality.
 
 ### Key Features
 
@@ -69,21 +69,27 @@ Domain Checker is a professional domain availability checking tool that uses asy
 
 ### Prerequisites
 
-- Python 3.12 or higher
+- Python 3.8 or higher
 - Stable internet connection
 - Sufficient disk space for storing results and progress files
 
 ### Installation
 
+#### Option 1: Install from PyPI (Recommended)
+```bash
+pip install rchecker
+```
+
+#### Option 2: Install from Source
 1. Clone the repository
 ```bash
 git clone https://github.com/Rain-kl/RChecker.git
-cd domain-checker
+cd RChecker
 ```
 
-2. Install dependencies
+2. Install in development mode
 ```bash
-pip install aiohttp tqdm
+pip install -e .
 ```
 
 Or using uv (recommended):
@@ -93,7 +99,7 @@ uv sync
 
 3. Run the tool
 ```bash
-python rchecker.py --help
+rchecker --help
 ```
 
 ## Usage
@@ -104,26 +110,26 @@ python rchecker.py --help
 Check domains starting with specific prefixes:
 ```bash
 # Check all 3-character .com domains
-python rchecker.py "a*" --max 3 --tld com
+rchecker "a*" --max 3 --tld com
 
 # Check domains with specific prefix
-python rchecker.py "app*" --max 6 --min 4 --tld com
+rchecker "app*" --max 6 --min 4 --tld com
 ```
 
 #### 2. Exact Domain Check
 ```bash
 # Check single domain
-python rchecker.py "example" --max 7 --min 7 --tld com
+rchecker "example" --max 7 --min 7 --tld com
 ```
 
 #### 3. Wordlist Mode
 ```bash
 # Use custom wordlist
-python rchecker.py --wordlist words.txt --max 10 --tld com
+rchecker --wordlist words.txt --max 10 --tld com
 
 # Download and use online wordlist
-python rchecker.py download common-small
-python rchecker.py --wordlist google-10000-english-usa.txt --max 8 --tld com
+rchecker download common-small
+rchecker --wordlist google-10000-english-usa.txt --max 8 --tld com
 ```
 
 ### Advanced Options
@@ -131,47 +137,47 @@ python rchecker.py --wordlist google-10000-english-usa.txt --max 8 --tld com
 #### Performance Tuning
 ```bash
 # Adjust concurrency and request rate
-python rchecker.py "test*" --max 5 --concurrency 20 --rate 100
+rchecker "test*" --max 5 --concurrency 20 --rate 100
 
 # Set timeout and retry count
-python rchecker.py "app*" --max 6 --timeout 15 --retries 3
+rchecker "app*" --max 6 --timeout 15 --retries 3
 ```
 
 #### Checkpoint/Resume
 ```bash
 # Enable checkpoint/resume functionality
-python rchecker.py "data*" --max 6 --resume --progress-file my_progress.json
+rchecker "data*" --max 6 --resume --progress-file my_progress.json
 
 # Randomize check order
-python rchecker.py "api*" --max 5 --shuffle
+rchecker "api*" --max 5 --shuffle
 ```
 
 #### Custom Output
 ```bash
 # Specify output file
-python rchecker.py "web*" --max 5 --output available_web_domains.txt
+rchecker "web*" --max 5 --output available_web_domains.txt
 
 # Disable progress bar
-python rchecker.py "blog*" --max 6 --no-progress
+rchecker "blog*" --max 6 --no-progress
 ```
 
 ### Wordlist Mode
 
 #### View Available Online Wordlists
 ```bash
-python rchecker.py download list
+rchecker download list
 ```
 
 #### Download Wordlists
 ```bash
 # Download common English words
-python rchecker.py download common-small
+rchecker download common-small
 
 # Download to specific location
-python rchecker.py download names --output first_names.txt
+rchecker download names --output first_names.txt
 
 # Force overwrite existing file
-python rchecker.py download adjectives --force
+rchecker download adjectives --force
 ```
 
 #### Built-in Wordlist Sources
@@ -187,11 +193,16 @@ python rchecker.py download adjectives --force
 ## File Structure
 
 ```
-domain-checker/
-├── rchecker.py              # Main program file
+RChecker/
+├── rchecker/               # Main package directory
+│   ├── __init__.py         # Package initialization
+│   ├── main.py             # Core functionality
+│   └── cli.py              # Command-line interface
 ├── pyproject.toml          # Project configuration
+├── MANIFEST.in             # Package manifest
 ├── LICENSE.txt             # MIT License
-├── README.md               # Project documentation (Chinese)
+├── README.md               # Project documentation (English)
+├── README-CN.md            # Project documentation (Chinese)
 ├── README.en.md            # Project documentation (English)
 ├── README copy.md          # README template
 ├── uv.lock                 # Dependency lock file

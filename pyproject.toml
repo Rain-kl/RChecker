@@ -1,7 +1,47 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
-name = "domain-checker"
+name = "rchecker"
 version = "0.1.0"
-description = "Add your description here"
+description = "A high-performance asynchronous domain availability checker supporting pattern matching and wordlist modes with checkpoint/resume functionality"
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = ["aiohttp>=3.9.0", "tqdm>=4.66.0"]
+requires-python = ">=3.8"
+license = { file = "LICENSE.txt" }
+authors = [{ name = "Rain-kl" }]
+maintainers = [{ name = "Rain-kl" }]
+keywords = ["domain", "checker", "availability", "async", "rdap", "dns"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: Name Service (DNS)",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+]
+dependencies = ["aiohttp>=3.8.0", "tqdm>=4.60.0"]
+
+[project.urls]
+Homepage = "https://github.com/Rain-kl/RChecker"
+Documentation = "https://github.com/Rain-kl/RChecker#readme"
+Repository = "https://github.com/Rain-kl/RChecker.git"
+Issues = "https://github.com/Rain-kl/RChecker/issues"
+
+[[tool.uv.index]]
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+default = true
+
+[project.scripts]
+rchecker = "rchecker.cli:cli_main"
+
+[dependency-groups]
+dev = ["build>=1.2.2.post1"]

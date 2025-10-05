@@ -1,8 +1,8 @@
-# Domain Checker
+# RChecker
 
 一个高性能的异步域名可用性检查工具，支持模式匹配和词汇表模式，具有断点续传功能。
 
-**语言:** [中文](README CN.md) | [English](README.md)
+**语言:** [中文](README-CN.md) | [English](README.md)
 
 <!-- PROJECT SHIELDS -->
 
@@ -16,29 +16,29 @@
 <br />
 
 <p align="center">
-  <a href="https://github.com/ryan/domain-checker">
+  <a href="https://github.com/Rain-kl/RChecker">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Domain Checker</h3>
+  <h3 align="center">RChecker</h3>
   <p align="center">
     一个快速、高效的域名可用性检查工具
     <br />
-    <a href="https://github.com/ryan/domain-checker"><strong>探索本项目的文档 »</strong></a>
+    <a href="https://github.com/Rain-kl/RChecker"><strong>探索本项目的文档 »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/ryan/domain-checker">查看Demo</a>
+    <a href="https://github.com/Rain-kl/RChecker">查看Demo</a>
     ·
-    <a href="https://github.com/ryan/domain-checker/issues">报告Bug</a>
+    <a href="https://github.com/Rain-kl/RChecker/issues">报告Bug</a>
     ·
-    <a href="https://github.com/ryan/domain-checker/issues">提出新特性</a>
+    <a href="https://github.com/Rain-kl/RChecker/issues">提出新特性</a>
   </p>
 
 </p>
 
 ## 项目简介
 
-Domain Checker 是一个专业的域名可用性检查工具，使用异步 HTTP 请求和 RDAP 协议来高效检查大量域名的注册状态。该工具支持多种操作模式，包括模式匹配生成、词汇表导入、断点续传等功能。
+RChecker 是一个专业的域名可用性检查工具，使用异步 HTTP 请求和 RDAP 协议来高效检查大量域名的注册状态。该工具支持多种操作模式，包括模式匹配生成、词汇表导入、断点续传等功能。
 
 ### 主要特性
 
@@ -69,21 +69,27 @@ Domain Checker 是一个专业的域名可用性检查工具，使用异步 HTTP
 
 ### 环境要求
 
-- Python 3.12 或更高版本
+- Python 3.8 或更高版本
 - 稳定的网络连接
 - 足够的磁盘空间用于存储结果和进度文件
 
 ### 安装步骤
 
-1. 克隆项目到本地
+#### 选项 1: 从 PyPI 安装（推荐）
 ```bash
-git clone https://github.com/ryan/domain-checker.git
-cd domain-checker
+pip install rchecker
 ```
 
-2. 安装依赖包
+#### 选项 2: 从源码安装
+1. 克隆仓库
 ```bash
-pip install aiohttp tqdm
+git clone https://github.com/Rain-kl/RChecker.git
+cd RChecker
+```
+
+2. 开发模式安装
+```bash
+pip install -e .
 ```
 
 或者使用 uv（推荐）：
@@ -93,7 +99,7 @@ uv sync
 
 3. 运行工具
 ```bash
-python rchecker.py --help
+rchecker --help
 ```
 
 ## 使用方法
@@ -104,26 +110,26 @@ python rchecker.py --help
 检查以特定前缀开头的域名：
 ```bash
 # 检查所有 3 位长度的 .com 域名
-python rchecker.py "a*" --max 3 --tld com
+rchecker "a*" --max 3 --tld com
 
 # 检查特定前缀的域名
-python rchecker.py "app*" --max 6 --min 4 --tld com
+rchecker "app*" --max 6 --min 4 --tld com
 ```
 
 #### 2. 精确域名检查
 ```bash
 # 检查单个域名
-python rchecker.py "example" --max 7 --min 7 --tld com
+rchecker "example" --max 7 --min 7 --tld com
 ```
 
 #### 3. 词汇表模式
 ```bash
 # 使用自定义词汇表
-python rchecker.py --wordlist words.txt --max 10 --tld com
+rchecker --wordlist words.txt --max 10 --tld com
 
 # 下载并使用在线词汇表
-python rchecker.py download common-small
-python rchecker.py --wordlist google-10000-english-usa.txt --max 8 --tld com
+rchecker download common-small
+rchecker --wordlist google-10000-english-usa.txt --max 8 --tld com
 ```
 
 ### 高级选项
@@ -131,47 +137,47 @@ python rchecker.py --wordlist google-10000-english-usa.txt --max 8 --tld com
 #### 性能调优
 ```bash
 # 调整并发数和请求速率
-python rchecker.py "test*" --max 5 --concurrency 20 --rate 100
+rchecker "test*" --max 5 --concurrency 20 --rate 100
 
 # 设置超时和重试次数
-python rchecker.py "app*" --max 6 --timeout 15 --retries 3
+rchecker "app*" --max 6 --timeout 15 --retries 3
 ```
 
 #### 断点续传
 ```bash
 # 启用断点续传功能
-python rchecker.py "data*" --max 6 --resume --progress-file my_progress.json
+rchecker "data*" --max 6 --resume --progress-file my_progress.json
 
 # 随机化检查顺序
-python rchecker.py "api*" --max 5 --shuffle
+rchecker "api*" --max 5 --shuffle
 ```
 
 #### 自定义输出
 ```bash
 # 指定输出文件
-python rchecker.py "web*" --max 5 --output available_web_domains.txt
+rchecker "web*" --max 5 --output available_web_domains.txt
 
 # 禁用进度条
-python rchecker.py "blog*" --max 6 --no-progress
+rchecker "blog*" --max 6 --no-progress
 ```
 
 ### 词汇表模式
 
 #### 查看可用的在线词汇表
 ```bash
-python rchecker.py download list
+rchecker download list
 ```
 
 #### 下载词汇表
 ```bash
 # 下载常用英文单词
-python rchecker.py download common-small
+rchecker download common-small
 
 # 下载到指定位置
-python rchecker.py download names --output first_names.txt
+rchecker download names --output first_names.txt
 
 # 强制覆盖已存在的文件
-python rchecker.py download adjectives --force
+rchecker download adjectives --force
 ```
 
 #### 内置词汇表源
@@ -187,11 +193,16 @@ python rchecker.py download adjectives --force
 ## 文件目录说明
 
 ```
-domain-checker/
-├── rchecker.py              # 主程序文件
+RChecker/
+├── rchecker/               # 主包目录
+│   ├── __init__.py         # 包初始化文件
+│   ├── main.py             # 核心功能
+│   └── cli.py              # 命令行接口
 ├── pyproject.toml          # 项目配置文件
+├── MANIFEST.in             # 包清单文件
 ├── LICENSE.txt             # MIT 许可证
-├── README.md               # 项目说明文档（中文版）
+├── README.md               # 项目说明文档（英文版）
+├── README-CN.md            # 项目说明文档（中文版）
 ├── README.en.md            # 项目说明文档（英文版）
 ├── README copy.md          # README 模板文件
 ├── uv.lock                 # 依赖锁定文件
@@ -281,7 +292,7 @@ graph TD
 
 ## 版本控制
 
-该项目使用 [SemVer](http://semver.org/) 语义化版本号进行版本管理。您可以查看 [Releases](https://github.com/ryan/domain-checker/releases) 来查看可用版本。
+该项目使用 [SemVer](http://semver.org/) 语义化版本号进行版本管理。您可以查看 [Releases](https://github.com/Rain-kl/RChecker/releases) 来查看可用版本。
 
 ### 更新日志
 
@@ -316,13 +327,13 @@ A: 输出文件是纯文本格式，每行一个可用的域名，方便后续�
 </p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[contributors-shield]: https://img.shields.io/github/contributors/ryan/domain-checker.svg?style=flat-square
-[contributors-url]: https://github.com/ryan/domain-checker/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/ryan/domain-checker.svg?style=flat-square
-[forks-url]: https://github.com/ryan/domain-checker/network/members
-[stars-shield]: https://img.shields.io/github/stars/ryan/domain-checker.svg?style=flat-square
-[stars-url]: https://github.com/ryan/domain-checker/stargazers
-[issues-shield]: https://img.shields.io/github/issues/ryan/domain-checker.svg?style=flat-square
-[issues-url]: https://github.com/ryan/domain-checker/issues
-[license-shield]: https://img.shields.io/github/license/ryan/domain-checker.svg?style=flat-square
-[license-url]: https://github.com/ryan/domain-checker/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/Rain-kl/RChecker.svg?style=flat-square
+[contributors-url]: https://github.com/Rain-kl/RChecker/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Rain-kl/RChecker.svg?style=flat-square
+[forks-url]: https://github.com/Rain-kl/RChecker/network/members
+[stars-shield]: https://img.shields.io/github/stars/Rain-kl/RChecker.svg?style=flat-square
+[stars-url]: https://github.com/Rain-kl/RChecker/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Rain-kl/RChecker.svg?style=flat-square
+[issues-url]: https://github.com/Rain-kl/RChecker/issues
+[license-shield]: https://img.shields.io/github/license/Rain-kl/RChecker.svg?style=flat-square
+[license-url]: https://github.com/Rain-kl/RChecker/blob/master/LICENSE.txt
