@@ -8,6 +8,8 @@ and the RDAP protocol, supporting pattern matching and wordlist modes with check
 __version__ = "0.1.0"
 __author__ = "Rain-kl"
 
-from .main import ProgressManager, RateLimiter, Stats, WORDLIST_SOURCES, main
+from .main import ProgressManager, RateLimiter, Stats
+from .resource import WORDLIST_SOURCES
+from .cli import cli_main
 
-__all__ = ["ProgressManager", "RateLimiter", "Stats", "WORDLIST_SOURCES", "main"]
+__all__ = ["ProgressManager", "RateLimiter", "Stats", "WORDLIST_SOURCES", "cli_main"]
