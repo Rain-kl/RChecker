@@ -19,6 +19,19 @@ async def check_domain(
                     return True
                 if resp.status == 200:
                     return False
+                # If rate limited, wait 5 seconds then retry (if attempts remain)
+                if resp.status == 429:
+                    if attempt == max_retries:
+                        body = await resp.text()
+                        print(
+                            f"Rate limited (429) for {fqdn} after {attempt + 1} attempts: {body[:200]}",
+                            file=sys.stderr,
+                        )
+                        return None
+                    # wait 5 seconds before next attempt
+                    await asyncio.sleep(5)
+                    continue
+
                 body = await resp.text()
                 print(
                     f"Unexpected RDAP response {resp.status} for {fqdn}: {body[:200]}",
